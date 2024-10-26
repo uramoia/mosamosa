@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player</title>
+</head>
+<body>
+    <h1>Audio Player</h1>
+    <button id="playApple">Play Apple Sound</button>
+    <button id="playGoukei">Play Goukei Sound</button>
+
+    <script>
+        async function playAudio(audioFile) {
+            const response = await fetch(`/api/play_audio?audioFile=${audioFile}`);
+            
+            if (response.ok) {
+                const data = await response.json();
+                
+                if (data.file) {
+                    const audioPlayer = new Audio(data.file); // 新しいAudioオブジェクトを作成
+                    audioPlayer.play(); // 音声を再生
+                    console.log(`Playing ${data.file}`);
+                } else {
+                    console.error('No audio file returned');
+                }
+            } else {
+                console.error('Failed to fetch audio:', response.status);
+            }
+        }
+
+        // ボタンにイベントリスナーを追加
+        document.getElementById('playApple').addEventListener('click', function() {
+            playAudio('Apple');
+        });
+
+        document.getElementById('playGoukei').addEventListener('click', function() {
+            playAudio('Goukei');
+        });
+    </script>
+</body>
+</html>
