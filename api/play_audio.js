@@ -16,7 +16,7 @@ export default function handler(req, res) {
   };
 
   if (audioFile && audioFiles[audioFile]) {
-    const fullUrl = `https://mosamosa.vercel.app/public/${audioFiles[audioFile]}`; // フルURLを生成
+    const fullUrl = `https://mosamosa.vercel.app/${audioFiles[audioFile]}`; // フルURLを生成
     console.log("Returning URL:", fullUrl); // レスポンスURLのログ出力
     res.status(200).json({ 
       message: 'Playing audio', 
