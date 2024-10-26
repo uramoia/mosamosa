@@ -7,30 +7,36 @@
 </head>
 <body>
     <h1>Audio Player</h1>
-    <div id="status"></div>
-    <audio id="audioPlayer" style="display:none;"></audio>
-    <script>
-        const audioPlayer = document.getElementById('audioPlayer');
-        const statusDiv = document.getElementById('status');
+    <button id="playApple">Play Apple Sound</button>
+    <button id="playGoukei">Play Goukei Sound</button>
 
-        async function checkForPlayRequest() {
-            try {
-                const response = await fetch('/api/play_audio');
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.file) {
-                        audioPlayer.src = data.file;
-                        audioPlayer.play();
-                        statusDiv.textContent = `Playing ${data.file}`;
-                    }
+    <script>
+        async function playAudio(audioFile) {
+            const response = await fetch(`/api/play_audio?audioFile=${audioFile}`);
+            
+            if (response.ok) {
+                const data = await response.json();
+                
+                if (data.file) {
+                    const audioPlayer = new Audio(data.file); // 新しいAudioオブジェクトを作成
+                    audioPlayer.play(); // 音声を再生
+                    console.log(`Playing ${data.file}`);
+                } else {
+                    console.error('No audio file returned');
                 }
-            } catch (error) {
-                console.error('Error checking for play request:', error);
+            } else {
+                console.error('Failed to fetch audio:', response.status);
             }
-            setTimeout(checkForPlayRequest, 1000);
         }
 
-        checkForPlayRequest();
+        // ボタンにイベントリスナーを追加
+        document.getElementById('playApple').addEventListener('click', function() {
+            playAudio('Apple');
+        });
+
+        document.getElementById('playGoukei').addEventListener('click', function() {
+            playAudio('Goukei');
+        });
     </script>
 </body>
 </html>
