@@ -1,6 +1,6 @@
 export default function handler(req, res) {
   const { audioFile } = req.query;
-
+  
   // CORSヘッダーの設定
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -8,14 +8,15 @@ export default function handler(req, res) {
 
   // 音声ファイルのマッピング
   const audioFiles = {
-    'Apple': 'https://mosamosa.vercel.app/Apple.wav',
-    'Goukei': 'https://mosamosa.vercel.app/Goukei.wav'
+    'Apple': '/Apple.wav',
+    'Goukei': '/Goukei.wav'
   };
 
   if (audioFile && audioFiles[audioFile]) {
+    const fullUrl = `https://mosamosa.vercel.app${audioFiles[audioFile]}`; // フルURLを生成
     res.status(200).json({ 
       message: 'Playing audio', 
-      file: audioFiles[audioFile] 
+      file: fullUrl // フルURLを返す
     });
   } else {
     res.status(400).json({ 
