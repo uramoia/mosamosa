@@ -7,37 +7,21 @@
 </head>
 <body>
     <h1>Audio Player</h1>
-    <button id="playButton1">Play Audio 1</button>
-    <button id="playButton2">Play Audio 2</button>
-    <audio id="audioPlayer1" style="display:none;">
-        <source src="https://example.com/your_audio_file1.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="audioPlayer2" style="display:none;">
-        <source src="https://example.com/your_audio_file2.mp3" type="audio/mpeg">
-    </audio>
+    <div id="status"></div>
+    <audio id="audioPlayer" style="display:none;"></audio>
     <script>
-        const playButton1 = document.getElementById('playButton1');
-        const playButton2 = document.getElementById('playButton2');
-        const audioPlayer1 = document.getElementById('audioPlayer1');
-        const audioPlayer2 = document.getElementById('audioPlayer2');
-
-        playButton1.addEventListener('click', () => {
-            audioPlayer1.play();
-        });
-
-        playButton2.addEventListener('click', () => {
-            audioPlayer2.play();
-        });
+        const audioPlayer = document.getElementById('audioPlayer');
+        const statusDiv = document.getElementById('status');
 
         async function checkForPlayRequest() {
             try {
                 const response = await fetch('/api/play_audio');
                 if (response.ok) {
                     const data = await response.json();
-                    if (data.audioToPlay === 1) {
-                        audioPlayer1.play();
-                    } else if (data.audioToPlay === 2) {
-                        audioPlayer2.play();
+                    if (data.file) {
+                        audioPlayer.src = data.file;
+                        audioPlayer.play();
+                        statusDiv.textContent = `Playing ${data.file}`;
                     }
                 }
             } catch (error) {
