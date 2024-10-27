@@ -6,25 +6,18 @@ export default function handler(req, res) {
 
   console.log("Received request for audioFile:", audioFile);
 
-  // CORSヘッダーの設定（変更なし）
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  // 音声ファイルのマッピング（変更なし）
   const audioFiles = {
-    'Apple': 'Apple.wav',
-    'Goukei': 'Goukei.wav'
+    'Apple': 'Apple.mp3',
+    'Goukei': 'Goukei.mp3'
   };
 
   if (audioFile && audioFiles[audioFile]) {
-    // 以下、ファイルを直接提供するように変更
     const filePath = path.join(process.cwd(), 'public', audioFiles[audioFile]);
     
     if (fs.existsSync(filePath)) {
       const stat = fs.statSync(filePath);
       res.writeHead(200, {
-        'Content-Type': 'audio/wav',
+        'Content-Type': 'audio/mpeg',
         'Content-Length': stat.size
       });
       const readStream = fs.createReadStream(filePath);
