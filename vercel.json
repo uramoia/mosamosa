@@ -5,9 +5,9 @@
   ],
   "headers": [
     {
-      "source": "/(.*\\.wav)",
+      "source": "/(.*\\.mp3)",
       "headers": [
-        { "key": "Content-Type", "value": "audio/wav" }
+        { "key": "Content-Type", "value": "audio/mpeg" }
       ]
     }
   ]
