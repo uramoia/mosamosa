@@ -1,8 +1,7 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/api/play_audio", "dest": "/api/play_audio.js" },
-    { "src": "/(.*)", "dest": "/public/$1" }
+  "rewrites": [
+    { "source": "/api/play_audio", "destination": "/api/play_audio.js" }
   ],
   "headers": [
     {
