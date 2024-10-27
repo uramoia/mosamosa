@@ -11,13 +11,14 @@
     <button id="playGoukei">Play Goukei Sound</button>
 
     <script>
+        // 以下、音声再生関数を変更
         async function playAudio(audioFile) {
             const audioPlayer = new Audio(`/api/play_audio?audioFile=${audioFile}`);
             audioPlayer.play();
             console.log(`Playing ${audioFile}`);
         }
 
-        // ボタンにイベントリスナーを追加
+        // ボタンにイベントリスナーを追加（変更なし）
         document.getElementById('playApple').addEventListener('click', function() {
             playAudio('Apple');
         });
